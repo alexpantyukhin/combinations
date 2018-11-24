@@ -17,7 +17,7 @@ func getCombinationNumber(pr *Product) int {
 }
 
 func TestProduct_GeneratesCorrectNumberOfCombintations(t *testing.T) {
-	pr2, _ := NewProduct([]interface{}{0, 1, 2}, 27)
+	pr2, _ := NewProduct([]interface{}{0, 1, 2}, 3)
 
-	assert.Equal(t, 9, getCombinationNumber(pr2))
+	assert.Equal(t, 27, getCombinationNumber(pr2))
 }
