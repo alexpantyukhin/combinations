@@ -10,6 +10,7 @@ type Product struct {
 	currValue     []interface{}
 	objs          []interface{}
 	repeat        int
+	init          bool
 }
 
 // NewProduct is constructor
@@ -30,11 +31,16 @@ func NewProduct(objs []interface{}, repeat int) (*Product, error) {
 		currValue[i] = objs[0]
 	}
 
-	return &Product{currPosition, currValue, objs, repeat}, nil
+	return &Product{currPosition, currValue, objs, repeat, false}, nil
 }
 
 // Next generates the next value for product
 func (product *Product) Next() bool {
+	if product.init == false {
+		product.init = true
+		return true
+	}
+
 	maxIndex := len(product.objs) - 1
 
 	numberMaxIndexes := 0
@@ -66,4 +72,55 @@ func (product *Product) Next() bool {
 // Value gets the current value
 func (product *Product) Value() []interface{} {
 	return product.currValue
+}
+
+// Permutation is
+type Permutation struct {
+	prod      *Product
+	objs      []interface{}
+	repeat    int
+	currValue []interface{}
+}
+
+// NewPermutation is constructor
+func NewPermutation(objs []interface{}, repeat int) (*Permutation, error) {
+	pr, err := NewProduct(objs, repeat)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &Permutation{pr, objs, repeat, pr.Value()}, nil
+}
+
+// Next generates the next value for permutation
+func (permutation *Permutation) Next() bool {
+	pr := permutation.prod
+	for pr.Next() {
+		currValue := pr.Value()
+		if checkArrayOnlyUniqueValues(pr.currPositions) {
+			permutation.currValue = currValue
+			return true
+		}
+	}
+
+	return false
+}
+
+// Value gets the current value
+func (permutation *Permutation) Value() []interface{} {
+	return permutation.currValue
+}
+
+func checkArrayOnlyUniqueValues(indexes []int) bool {
+	ln := len(indexes)
+	for i := 0; i < ln-1; i++ {
+		for j := i + 1; j < ln; j++ {
+			if indexes[i] == indexes[j] {
+				return false
+			}
+		}
+	}
+
+	return true
 }
