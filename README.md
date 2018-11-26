@@ -3,7 +3,7 @@ A package with combinations functions from [python itertools](https://docs.pytho
 For now the foolowing iterators are implemented :
    - [x] Product (the [Cartesian product](https://en.wikipedia.org/wiki/Cartesian_product)).
    - [x] Permutation (basing on the `Product` result).
-   - [ ] Combination.
+   - [x] Combination.
    - [ ] Combination with replacement.
 
 # Installation

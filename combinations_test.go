@@ -44,3 +44,9 @@ func TestPermutation_GeneratesCorrectNumberOfCombintationsFor3Objects1Repeats(t 
 
 	assert.Equal(t, 3, getCombinationNumber(per))
 }
+
+func TestCombinations_GeneratesCorrectNumberOfCombintationsFor3Objects3Repeats(t *testing.T) {
+	comb, _ := NewCombination([]interface{}{"A", "B", "C", "D"}, 2)
+
+	assert.Equal(t, 6, getCombinationNumber(comb))
+}

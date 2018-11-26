@@ -13,6 +13,8 @@ type Product struct {
 	init          bool
 }
 
+type comparison func(int, int) bool
+
 // NewProduct is constructor
 func NewProduct(objs []interface{}, repeat int) (*Product, error) {
 	if repeat < 1 {
@@ -110,6 +112,64 @@ func (permutation *Permutation) Next() bool {
 // Value gets the current value
 func (permutation *Permutation) Value() []interface{} {
 	return permutation.currValue
+}
+
+// Combination is
+type Combination struct {
+	prod      *Product
+	objs      []interface{}
+	repeat    int
+	currValue []interface{}
+}
+
+// NewCombination is constructor
+func NewCombination(objs []interface{}, repeat int) (*Combination, error) {
+	pr, err := NewProduct(objs, repeat)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &Combination{pr, objs, repeat, pr.Value()}, nil
+}
+
+// Next generates the next value for combination
+func (combinations *Combination) Next() bool {
+	c := combinations.prod
+	for c.Next() {
+		currValue := c.Value()
+		if checkNeighbourElementsWithFunc(c.currPositions, greater) {
+			combinations.currValue = currValue
+			return true
+		}
+	}
+
+	return false
+}
+
+// Value gets the current value
+func (combinations *Combination) Value() []interface{} {
+	return combinations.currValue
+}
+
+func greater(a1, a2 int) bool {
+	return a1 > a2
+}
+
+func checkNeighbourElementsWithFunc(indexes []int, fun comparison) bool {
+	ln := len(indexes)
+
+	if ln == 1 {
+		return true
+	}
+
+	for i := 1; i < ln; i++ {
+		if !fun(indexes[i-1], indexes[i]) {
+			return false
+		}
+	}
+
+	return true
 }
 
 func checkArrayOnlyUniqueValues(indexes []int) bool {
