@@ -50,3 +50,15 @@ func TestCombinations_GeneratesCorrectNumberOfCombintationsFor3Objects3Repeats(t
 
 	assert.Equal(t, 6, getCombinationNumber(comb))
 }
+
+func TestCombinationsWithReplacement_GeneratesCorrectNumberOfCombintationsFor4Objects2Repeats(t *testing.T) {
+	comb, _ := NewCombinationWithReplacement([]interface{}{"A", "B", "C", "D"}, 2)
+
+	assert.Equal(t, 10, getCombinationNumber(comb))
+}
+
+func TestCombinationsWithReplacement_GeneratesCorrectNumberOfCombintationsFor4Objects1Repeats(t *testing.T) {
+	comb, _ := NewCombinationWithReplacement([]interface{}{"A", "B", "C", "D"}, 1)
+
+	assert.Equal(t, 4, getCombinationNumber(comb))
+}

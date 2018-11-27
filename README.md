@@ -4,7 +4,7 @@ For now the foolowing iterators are implemented :
    - [x] Product (the [Cartesian product](https://en.wikipedia.org/wiki/Cartesian_product)).
    - [x] Permutation (basing on the `Product` result).
    - [x] Combination.
-   - [ ] Combination with replacement.
+   - [x] Combination with replacement.
 
 # Installation
 Just `go get` this repository with the following way:
