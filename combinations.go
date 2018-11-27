@@ -120,6 +120,7 @@ type Combination struct {
 	objs      []interface{}
 	repeat    int
 	currValue []interface{}
+	comparer  comparison
 }
 
 // NewCombination is constructor
@@ -130,15 +131,27 @@ func NewCombination(objs []interface{}, repeat int) (*Combination, error) {
 		return nil, err
 	}
 
-	return &Combination{pr, objs, repeat, pr.Value()}, nil
+	return &Combination{pr, objs, repeat, pr.Value(), greater}, nil
+}
+
+// NewCombinationWithReplacement is constructor
+func NewCombinationWithReplacement(objs []interface{}, repeat int) (*Combination, error) {
+	pr, err := NewProduct(objs, repeat)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &Combination{pr, objs, repeat, pr.Value(), greaterOrEqual}, nil
 }
 
 // Next generates the next value for combination
 func (combinations *Combination) Next() bool {
-	c := combinations.prod
-	for c.Next() {
-		currValue := c.Value()
-		if checkNeighbourElementsWithFunc(c.currPositions, greater) {
+	prod := combinations.prod
+
+	for prod.Next() {
+		currValue := prod.Value()
+		if checkNeighbourElementsWithFunc(prod.currPositions, combinations.comparer) {
 			combinations.currValue = currValue
 			return true
 		}
@@ -154,6 +167,10 @@ func (combinations *Combination) Value() []interface{} {
 
 func greater(a1, a2 int) bool {
 	return a1 > a2
+}
+
+func greaterOrEqual(a1, a2 int) bool {
+	return a1 >= a2
 }
 
 func checkNeighbourElementsWithFunc(indexes []int, fun comparison) bool {
