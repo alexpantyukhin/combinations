@@ -92,8 +92,8 @@ func NewPermutation(objs []interface{}, repeat int) (*Permutation, error) {
 		return nil, err
 	}
 
-	objs_len := len(objs)
-	if objs_len < repeat {
+	objsLen := len(objs)
+	if objsLen < repeat {
 		return nil, errors.New("repeat should be less then length of objs")
 	}
 
@@ -136,8 +136,8 @@ func NewCombination(objs []interface{}, repeat int) (*Combination, error) {
 		return nil, err
 	}
 
-	objs_len := len(objs)
-	if objs_len < repeat {
+	objsLen := len(objs)
+	if objsLen < repeat {
 		return nil, errors.New("repeat should be less then length of objs")
 	}
 

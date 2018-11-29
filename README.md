@@ -1,6 +1,6 @@
 # Combinations
 A package with combinations functions from [python itertools](https://docs.python.org/3/library/itertools.html).
-For now the foolowing iterators are implemented :
+For now the following iterators are implemented :
    - [x] Product (the [Cartesian product](https://en.wikipedia.org/wiki/Cartesian_product)).
    - [x] Permutation (basing on the `Product` result).
    - [x] Combination.
